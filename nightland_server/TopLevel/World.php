@@ -22,13 +22,18 @@ class World extends EventHandler
       $this->logger->log( "Handle event EXPLODED(".join(',', $arg_array ).")", 6 );
    }
 
+   public function handleSayEvent( $arg_array )
+   {
+      $this->logger->log( "Handle event SAY(".join(',', $arg_array ).")", 6 );
+   }
+
    public function tick()
    {
       $this->counter = $this->counter + 1;
       $this->logger->log( "World ticked, counter is ".$this->counter, 3 );
    }
 
-   public function getWorldEvents()
+   public function getLocalEvents()
    {
       if ( $this->counter % 5 == 0 ) {
          return array( new Event( Event::EXPLODED, array($this->counter) ) );
@@ -42,6 +47,7 @@ class World extends EventHandler
       $this->addCallback( Event::BORN,     array($this, "handleBornEvent"    ) );
       $this->addCallback( Event::DIED,     array($this, "handleDiedEvent"    ) );
       $this->addCallback( Event::EXPLODED, array($this, "handleExplodedEvent") );
+      $this->addCallback( Event::SAY     , array($this, "handleSayEvent") );
       $this->counter = 0;
    }
 }
