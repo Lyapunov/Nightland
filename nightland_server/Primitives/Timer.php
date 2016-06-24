@@ -1,4 +1,7 @@
 <?php
+
+namespace Primitives;
+
 class Timer
 {
    private function setNextDeadline() {

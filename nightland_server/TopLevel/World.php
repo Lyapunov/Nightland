@@ -1,6 +1,9 @@
 <?php
 
-require( "primitives/eventhandler.php" );
+namespace TopLevel;
+
+use \Primitives\Event;
+use \Primitives\EventHandler;
 
 class World extends EventHandler
 {

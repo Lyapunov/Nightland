@@ -1,6 +1,8 @@
 <?php
 
-require( "event.php" );
+namespace Primitives;
+
+use Primitives\Event;
 
 class EventHandler
 {

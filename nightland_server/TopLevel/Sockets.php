@@ -1,5 +1,8 @@
 <?php
-require("primitives/event.php");
+
+namespace TopLevel;
+
+use \Primitives\Event;
 
 class Sockets
 {

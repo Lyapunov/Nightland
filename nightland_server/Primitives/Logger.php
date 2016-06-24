@@ -1,4 +1,7 @@
 <?php
+
+namespace Primitives;
+
 class Logger
 {
    public function __construct( ) {}

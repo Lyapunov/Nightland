@@ -1,6 +1,8 @@
 <?php
 
-if ( !class_exists('Event') ) {
+namespace Primitives;
+
+//if ( !class_exists('Event') ) {
    class Event
    {
       const BORN = 1;
@@ -22,4 +24,4 @@ if ( !class_exists('Event') ) {
 
       public function convertToString() { return $this->getTypeText( $this->event_type ).",".join( ",", $this->arg_array ); }
    }
-}
+//}

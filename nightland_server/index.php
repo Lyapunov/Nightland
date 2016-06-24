@@ -8,10 +8,34 @@ error_reporting(~E_NOTICE); //
 set_time_limit (0);         // run script forever
 //ob_implicit_flush(true);    // flush after each echo()
 
-require("logger.php");
-require("primitives/timer.php");
-require("sockets.php");
-require("world.php");
+spl_autoload_register(
+   function($className)
+   {
+      $className = str_replace("_", "\\", $className);
+      $className = ltrim($className, '\\');
+      $fileName = '';
+      $namespace = '';
+      if ($lastNsPos = strripos($className, '\\'))
+      {
+         $namespace = substr($className, 0, $lastNsPos);
+         $className = substr($className, $lastNsPos + 1);
+         $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+      }
+      $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
+      require $fileName;
+   }
+);
+
+//set_include_path(__DIR__."/html");
+use Ratchet\Server\IoServer;
+//use MyApp\Chat;
+use Primitives\Logger;
+use Primitives\Timer;
+
+use TopLevel\Sockets;
+use TopLevel\World;
+
+require 'vendor/autoload.php';
 
 $address = "127.0.0.1";
 $port = 4096;
