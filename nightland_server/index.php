@@ -28,6 +28,12 @@ $max_clients = 10;
 $logger  = new Logger();
 $world   = new World( $logger );
 
+
+// Note: the idea of decompositioning IoServer::factory() in order to add timer to the main loop 
+//       is something you can come up with after studying its source
+//       https://github.com/ratchetphp/Ratchet/blob/master/src/Ratchet/Server/IoServer.php#L68.
+//       But many stack overflow threads are for making easier having this idea.
+
 $loop = LoopFactory::create();
 $socket = new Reactor( $loop );
 $socket->listen( 8080, '0.0.0.0');
