@@ -11,6 +11,9 @@ set_time_limit (0);         // run script forever
 require('autoloader.php');
 
 use Ratchet\Server\IoServer;
+use Ratchet\WebSocket\WsServer;
+use Ratchet\Http\HttpServer;
+
 use React\EventLoop\Factory as LoopFactory;
 use React\Socket\Server as Reactor;
 
@@ -38,7 +41,7 @@ $loop = LoopFactory::create();
 $socket = new Reactor( $loop );
 $socket->listen( 8080, '0.0.0.0');
 $core = new Sockets( $logger );
-$server = new IoServer($core, $socket, $loop);
+$server = new IoServer(new HttpServer( new WsServer( $core ) ), $socket, $loop);
 $loop->addPeriodicTimer(2,
    function($timer) use ( $core, $world ) {
      $core->passClientActionsToWorld( $world );
