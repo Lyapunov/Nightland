@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p><pre id="result"></pre></p>
+<br><br>
+
+<script>
+var connection=new WebSocket("ws://localhost:8080",'json');
+
+connection.onopen = function () {
+   connection.send('Hello, Server!!'); //send a message to server once connection is opened.
+};
+
+connection.onerror = function (error) {
+   console.log('Error Logged: ' + error); //log errors
+   document.getElementById("result").innerHTML = 'Error Logged: ' + error;
+};
+
+connection.onmessage = function (e) {
+   document.getElementById("result").innerHTML = 'Received From Server: ' + e.data;
+};
+
+</script>
+
+</body>
+</html>
