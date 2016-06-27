@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="578" height="400"></canvas>
+    <pre id="myMessages" width="578" height="100">Test</pre>
+
+    <script>
+      var offsetx = 0;
+      var offsety = 0;
+
+      function frameUpdate() {
+        offsetx++;
+        offsety++;
+        if ( offsetx >= 128 ) {
+           offsetx = 0;
+        }
+        if ( offsety >= 128 ) {
+           offsety = 0;
+        }
+
+        // redrawing background textures
+        for ( var jx = 0; jx < 6; ++jx ) {
+           for ( var jy = 0; jy < 5; ++jy ) {
+              context.drawImage(imageObj, 0, 0, 256, 256, jx * 128 - offsetx, jy * 128 -offsety, 128, 128);
+           }
+        }
+      }
+
+      function main() {
+        frameUpdate();
+        var interv = setInterval(frameUpdate, 50);
+      }
+
+      // Canvas & main hook
+      // ------------------
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      var imageObj = new Image();
+
+      imageObj.onload = function() {
+        main();
+      };
+      imageObj.src = 'textures.png';
+
+      // Websocket
+      var connection=new WebSocket("ws://localhost:8080",'json');
+
+      connection.onopen = function () {
+         connection.send('Hello, Server!!'); //send a message to server once connection is opened.
+      };
+
+      connection.onerror = function (error) {
+         console.log('Error Logged: ' + error); //log errors
+         document.getElementById("myMessages").innerHTML = 'Error Logged: ' + error + '\n';
+      };
+
+      connection.onmessage = function (e) {
+         document.getElementById("myMessages").innerHTML += 'Received From Server: ' + e.data + '\n';
+      };
+
+    </script>
+  </body>
+</html>      
