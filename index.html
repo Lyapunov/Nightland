@@ -14,12 +14,37 @@
     <pre id="myMessages" width="578" height="100">Test</pre>
 
     <script>
+      window.addEventListener('keydown',this.check,false);
+
       var offsetx = 0;
       var offsety = 0;
 
+      function check(e) {
+//        alert(e.keyCode);
+        switch( e.keyCode ) {
+          case 65:
+            offsetx-= 4;
+            break;
+          case 68:
+            offsetx+= 4;
+            break;
+          case 83:
+            offsety+= 4;
+            break;
+          case 87:
+            offsety-= 4;
+            break;
+        }
+      }
+
       function frameUpdate() {
-        offsetx++;
-        offsety++;
+        if ( offsetx < 0 ) {
+           offsetx = 127;
+        }
+        if ( offsety < 0 ) {
+           offsety = 127;
+        }
+
         if ( offsetx >= 128 ) {
            offsetx = 0;
         }
